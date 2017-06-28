@@ -43,7 +43,7 @@ Email submissions to underhanded-submissions@solidity.cc. Entries should consist
 Judging this first contest are:
 
  - Christian Reitwiessner, Solidity lead developer
- - Raine Revere
+ - Raine Revere, Prism lead architect
  - Reto Trinkler, Melonport CTO
  - Matthew Di Ferrente, Security engineer & code auditor
 
