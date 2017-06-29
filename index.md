@@ -45,7 +45,7 @@ Judging this first contest are:
  - Christian Reitwiessner, Solidity lead developer
  - Raine Revere, Prism lead architect
  - Reto Trinkler, Melonport CTO
- - Matthew Di Ferrente, Security engineer & code auditor
+ - Matthew Di Ferrante, Security engineer & code auditor
 
 Judges are presented with anonymised submissions, and provide scores and commentary. The scores across all judges will be aggregated to determine the final score of each entry.
 
