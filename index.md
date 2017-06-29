@@ -43,9 +43,10 @@ Email submissions to underhanded-submissions@solidity.cc. Entries should consist
 Judging this first contest are:
 
  - Christian Reitwiessner, Solidity lead developer
+ - Matthew Di Ferrante, Security engineer & code auditor
  - Raine Revere, Prism lead architect
  - Reto Trinkler, Melonport CTO
- - Matthew Di Ferrante, Security engineer & code auditor
+ - Yudi Levi, Localcoin CTO
 
 Judges are presented with anonymised submissions, and provide scores and commentary. The scores across all judges will be aggregated to determine the final score of each entry.
 
