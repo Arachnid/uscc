@@ -38,6 +38,16 @@ Email submissions to underhanded-submissions@solidity.cc. Entries should consist
  - July 31, 2017: Submissions close
  - September 1, 2017 or before: Winners announced
 
+# Frequently Asked Questions
+
+## Why are you doing this?
+
+Writing secure code is as much about behaving in a way users expect as it is about the technical aspects of software engineering, and 'hacking' is as much about exploiting differences between expected behaviour and real behaviour as it is about finding an exploiting bugs. We want to highlight this discrepancy, and make people think hard about how things _actually_ work. In the process, we hope people will learn more about writing secure software, and establish new guidelines and best practices to help reduce the risk of 'underhanded' coding adversely affecting a real project.
+
+## Are you encouraging people to be evil or underhanded?
+
+No - quite the reverse. Our goal is to highlight anti-patterns in smart contract development, so people are more aware of and can avoid the pitfalls when writing and reviewing smart contract code.
+
 # Judges
 
 Judging this first contest are:
@@ -53,6 +63,8 @@ Judges are presented with anonymised submissions, and provide scores and comment
 # Prizes
 
 The Ethereum Foundation has generously contributed a first prize of a ticket to DevCon 3 in Cancun, and a speaking slot for the winner to present their entry.
+
+Prizes are void where prohibited by law. If your jurisdiction requires you to pay taxes on prizes or imposes other restrictions, it's up to you to adhere to those.
 
 The judges may, at their discretion, nominate any number of additional 'honorable mentions' for examination and approbation on the website.
 
