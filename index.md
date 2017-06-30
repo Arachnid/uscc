@@ -32,7 +32,11 @@ Entrants must write a contract that in some way relates to ICOs - such as an ERC
 
 # Submission guidelines and deadline
 
-Email submissions to underhanded-submissions@solidity.cc. Entries should consist of a ZIP file containing a README describing your submission and how it works (spoilers included), and one or more Solidity files. Please do not include identifying information in the ZIP file; entries will be sent to judges anonymously.
+Email submissions to underhanded-submissions@solidity.cc. Entries should consist of a ZIP file containing a README describing your submission and how it works (spoilers included), and one or more Solidity files.
+
+The entirety of your entry must be submitted under the [Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)](http://creativecommons.org/licenses/by-sa/3.0/) license. You must not submit anything that cannot be submitted under that license.
+
+Please do not include identifying information in the ZIP file; entries will be sent to judges anonymously.
 
  - July 1, 2017: Submissions open
  - July 31, 2017: Submissions close
