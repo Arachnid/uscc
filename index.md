@@ -44,6 +44,10 @@ Please do not include identifying information in the ZIP file; entries will be s
 
 # Frequently Asked Questions
 
+## Who can participate
+
+Anyone over the age of 13 except the judges and the organiser, Nick Johnson, and those who live in areas where contests of this kind are prohibited.
+
 ## Why are you doing this?
 
 Writing secure code is as much about behaving in a way users expect as it is about the technical aspects of software engineering, and 'hacking' is as much about exploiting differences between expected behaviour and real behaviour as it is about finding an exploiting bugs. We want to highlight this discrepancy, and make people think hard about how things _actually_ work. In the process, we hope people will learn more about writing secure software, and establish new guidelines and best practices to help reduce the risk of 'underhanded' coding adversely affecting a real project.
@@ -68,7 +72,7 @@ Judges are presented with anonymised submissions, and provide scores and comment
 
 The Ethereum Foundation has generously contributed a first prize of a ticket to DevCon 3 in Cancun, and an opportunity to present your winning entry.
 
-Contest void where prohibited by law. If your jurisdiction requires you to pay taxes on prizes or imposes other restrictions, it's up to you to adhere to those.
+Contest void where prohibited by law. If your jurisdiction requires you to pay taxes on prizes or imposes other restrictions, it's up to you to adhere to those. Every attendee to Devcon3 must comply with and be subject to the terms and conditions and [code of conduct of Devcon3](http://ethereumfoundation.org/Devcon3/Terms/) and this includes those who attend through the grant of this prize.
 
 The judges may, at their discretion, nominate any number of additional 'honorable mentions' for examination and approbation on the website.
 
