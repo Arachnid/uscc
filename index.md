@@ -74,7 +74,7 @@ The Ethereum Foundation has generously contributed a first prize of a pass to De
 
 Second place prize is 10 MLN tokens from [Melonport](https://melonport.com/).
 
-Contest void where prohibited by law. If your jurisdiction requires you to pay taxes on prizes or imposes other restrictions, it's up to you to adhere to those. Every attendee to Devcon3 must comply with and be subject to the terms and conditions and [code of conduct of Devcon3](http://ethereumfoundation.org/Devcon3/Terms/) and this includes those who attend through the grant of this prize.
+Contest void where prohibited by law. If your jurisdiction requires you to pay taxes on prizes or imposes other restrictions, it's up to you to adhere to those. Every attendee to Devcon3 must comply with and be subject to the terms and conditions and [code of conduct of Devcon3](https://ethereumfoundation.org/devcon3/terms/) and this includes those who attend through the grant of this prize.
 
 The judges may, at their discretion, nominate any number of additional 'honorable mentions' for examination and approbation on the website.
 
