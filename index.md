@@ -70,7 +70,7 @@ Judges are presented with anonymised submissions, and provide scores and comment
 
 # Prizes
 
-The Ethereum Foundation has generously contributed a first prize of a ticket to DevCon 3 in Cancun, and an opportunity to present your winning entry.
+The Ethereum Foundation has generously contributed a first prize of a pass to DevCon 3 in Cancun, and an opportunity to present your winning entry.
 
 Contest void where prohibited by law. If your jurisdiction requires you to pay taxes on prizes or imposes other restrictions, it's up to you to adhere to those. Every attendee to Devcon3 must comply with and be subject to the terms and conditions and [code of conduct of Devcon3](http://ethereumfoundation.org/Devcon3/Terms/) and this includes those who attend through the grant of this prize.
 
