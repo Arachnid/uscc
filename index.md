@@ -36,6 +36,10 @@ Email submissions to underhanded-submissions@solidity.cc. Entries should consist
 
 The entirety of your entry must be submitted under the [Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)](http://creativecommons.org/licenses/by-sa/3.0/) license. You must not submit anything that cannot be submitted under that license.
 
+Judges will compile your code using a recent version of Solidity. You may specify a particular version in your source files - but you should expect this to raise some major red flags with the judges.
+
+Each person may enter only once. If you wish to make a team submission, nominate a single person to submit on your team's behalf.
+
 Please do not include identifying information in the ZIP file; entries will be sent to judges anonymously.
 
  - July 1, 2017: Submissions open
