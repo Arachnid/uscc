@@ -74,7 +74,7 @@ Judges are presented with anonymised submissions, and provide scores and comment
 
 # Prizes
 
-The Ethereum Foundation has generously contributed a first prize of a pass to DevCon 3 in Cancun, and an opportunity to present your winning entry.
+The Ethereum Foundation has contributed a Devcon3 pass and an opportunity to present your winning entry, which the contest is offering as a first prize.
 
 Second place prize is 10 MLN tokens from [Melonport](https://melonport.com/).
 
