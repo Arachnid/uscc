@@ -74,9 +74,13 @@ Judges are presented with anonymised submissions, and provide scores and comment
 
 # Prizes
 
-The Ethereum Foundation has contributed a Devcon3 pass and an opportunity to present your winning entry, which the contest is offering as a first prize.
+A prize pool, consisting of donations from Ethereum-related organisations, is available. Each winner, starting with first place, will be allowed to choose a prize from the pool.
 
-Second place prize is 10 MLN tokens from [Melonport](https://melonport.com/).
+Prizes are:
+
+ - The Ethereum Foundation has contributed a Devcon3 pass and an opportunity to present your winning entry at Devcon3.
+ - [Melonport](https://melonport.com/) has contributed 10 MLN tokens.
+ - iExec has contributed a round trip flight from anywhere in the world to Lyon, France, and lunch with the iExec team.
 
 Contest void where prohibited by law. If your jurisdiction requires you to pay taxes on prizes or imposes other restrictions, it's up to you to adhere to those. Every attendee to Devcon3 must comply with and be subject to the terms and conditions and [code of conduct of Devcon3](https://ethereumfoundation.org/devcon3/terms/) and this includes those who attend through the grant of this prize.
 
