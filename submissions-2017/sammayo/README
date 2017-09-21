@@ -1,0 +1,43 @@
+This is a simple multisig crowd-sale contract. I have tried to keep it as straightforward as possible, so it is very limited in features. However, this ~50 line contract has a major flaw that is tricky to spot. Enjoy!
+
+NOTE: This has been tested on version 0.4.13, which is the latest stable version of solidity at the time of submission.
+
+- - - INSTRUCTIONS - - -
+
+	There are two signers, signer1 and signer2. Right now they are hard-coded in as the first two accounts in the javascript vm environment in remix (http://remix.ethereum.org/), but feel free to change them.
+
+	There is a struct called Proposal that has two fields: amount and dest. There are two public global variables that are of type Proposal, corresponding to the current proposals of signer1 and signer2. After the sale ends, a signer can use the withdraw(uint _amount, address _dest) function to set his or her proposal to withdraw _amount ether from the contract and send it to _dest. If the current proposals from both signers are matching, the agreed upon amount is sent to the agreed upon address.
+
+- - - HOW TO EXPLOIT - - -
+
+If either of the signers know the flaw, they can completely screw over the other signer and run off with all the money. Say you are a signer and your address is addr. After the crowdsale ends, do withdraw(addr, addr), with the first argument padded on the left with zeros since _amount is a 32 byte uint. This will immediately transfer the entire contract balance to your account. The contract will not ever work as expected. If a signer does not use this exploit, some seriously weird things will happen (try it out!).
+
+- - - HOW IT WORKS - - -
+
+This is actually based on a bug in the solidity compiler. Observe the following solidity code:
+
+contract someContract {
+  uint num = 3;
+
+  struct S {
+    uint b;
+  }
+
+  function f() {
+    S s;
+    s.b = 15;
+  }
+}
+
+	When the contract is created, num will obviously be initialized to 3. Upon the execution of f(), what will the value of num be? If the bug has not been fixed at the time of your reading, the answer is actually 15. Because num wasn’t assigned a value in some function, the solidity compiler ignores it and writes over it in memory. Num is assigned the value of s.b. Say there were a second global variable, uint num2, and the struct S had an extra uint, say c. if s.c was assigned in f() just like s.b, num2 would be assigned to the value of s.c.
+	
+	The crowd-sale contract uses this bug. Instead of the uint num and num2, it uses the address signer1 and signer2. Instead of the struct S it uses the struct Proposal. When the function withdraw(_amount, _dest) is executed, it sets the proposal p to have amount equal to _amount and dest equal to _dest. This is actually setting signer1 equal to _amount and signer2 equal to _dest. If _amount and _dest are both given as the same address, both signers will now have that address. This gives that address complete control over the funds! Although a singer must call the function, they can set the new signers to be any address they want.
+	
+	There is one more thing that should be mentioned: The amount that is given to the proposal which is executed is the address of the new signer in the form of a uint. This means that the amount to be sent will be a very large number, surely larger than the balance of the contract. Therefore the entire contract balance is sent.
+
+- - - CONCLUSION - - -
+
+Essentially, what you should take from this is to always assign non-constant global variables in a constructor. Although I think this bug only applies when initializing a struct in this specific way, it’s better to err on the side of caution. I hope you enjoyed this underhanded solidity code as much as I did!
+
+P.S.
+Someone should really fix this bug.

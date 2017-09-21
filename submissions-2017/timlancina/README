@@ -1,0 +1,33 @@
+### MDTToken
+
+The most heralded ICO of the year!
+
+Some features of the contract:
+ - Uncapped token supply
+ - Tokens are created 1:1 with Ether sent to the contract
+ - Ether is burned!
+ - Ends after ~30 days
+ - 1 million MDT are reserved for the owner (me) and any investors
+
+The distribution scheme is as follows:
+  The owner is entitled to 20% of the reserved MDT, and the investors split the
+  remaining 80% (between however many investors there are).
+  However, after the offering period has ended, there is a one year penalty
+  period. If the owner withdraws their portion of the reserve before the one
+  year is up, they receive a portion of their 20% equal to the percentage of
+  the year that has elapsed so far. So if only 6 months have gone by, the owner
+  receives 10%, and the investors split ithe remaining 90%.
+  Another caveat is that investors cannot withdraw *their* MDT until after the
+  owner has withdrawn his/hers.
+
+The sneakiness is that payoutPercent is redeclared locally at the bottom of the
+withdrawMDT function, so when the owner goes to withdraw funds early, the
+payoutPercentage underflows (because it's actually 0) and instead of having their
+balance credited with some portion of the fund, they receive something close to
+MAX_INT. Hello Shittoken!
+
+Thanks for doing this contest! This was my first contract ever and I learned
+a ton about Solidity and developing contracts in the process.
+
+
+Licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0).

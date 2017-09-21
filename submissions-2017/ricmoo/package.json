@@ -1,0 +1,15 @@
+{
+  "name": "uscc-entry",
+  "version": "0.0.1",
+  "description": "An entry for the Underhanded Solidity Coding Competion.",
+  "main": "index.js",
+  "dependencies": {
+    "ethers": "^2.1.0",
+    "ethereumjs-testrpc": "^3.0.5",
+    "solc": "0.4.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT"
+}

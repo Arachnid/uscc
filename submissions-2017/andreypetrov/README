@@ -1,0 +1,101 @@
+# (Broken) CrowdsaleWithApprover
+
+**WARNING**: DO NOT USE THIS CONTRACT. IT IS AN EXAMPLE OF A BROKEN CONTRACT.
+
+CrowdsaleWithApprover implements the standard ERC20 interface. This was largely
+done in earnest without reference of existing contracts to avoid complexity. The
+code is reasonably well documented and does not attempt to overwhelm the reader.
+
+This contract is instantiated with:
+
+- `uint _totalSupply` which is the maximum number of tokens that will be raised.
+- `uint _priceInWei` which is the price of each token in Wei.
+- `address _fundraiser` which is the address that the funds can be withdrawn
+  into once the crowdfund conditions are reached.
+- `address _approver` which is the address of some entity (like an escrow
+  oracle) that is permitted to declare that the conditions are reached. Perhaps
+  this includes a completion of some obligation from the fundraisers.
+
+While this contract does not implement a timed-release (to keep things simple),
+it does implement an arbiter. In general, some complex features were omitted as
+they would not make any difference in this scenario--only add more code to
+review.
+
+The underhanded goal is for the fundraiser to acquire funds prematurely.
+
+This contract does not yield and errors or warnings with the latest compiler on
+http://remix.ethereum.org/. Overall, it looks sensible and not nefarious.
+
+
+
+## Spoilers Below...
+
+.
+
+.
+
+.
+
+.
+
+.
+
+The fix to the vulnerability is the patch below:
+
+```
+diff --git a/solidity/brokencrowdsale.sol b/solidity/brokencrowdsale.sol
+index 901834e..8aa1003 100644
+--- a/solidity/brokencrowdsale.sol
++++ b/solidity/brokencrowdsale.sol
+@@ -55,7 +55,7 @@ contract CrowdsaleWithApprover is ERC20 {
+             _;
+         }
+         // Fundraiser condition: Is approved and sender is fundraiser
+-        else (_is == Is.ApprovedFundraiser && msg.sender == fundraiser && state == State.Approved); {
++        else if (_is == Is.ApprovedFundraiser && msg.sender == fundraiser && state == State.Approved) {
+             _;
+         }
+```
+
+Without the patch, the ApporvedFundraiser check does nothing--it's a no-op line
+that falls through to:
+
+```
+{
+    _;
+}
+```
+
+Solidity allows arbitrary brace blocks. It's not clear what purpose they
+serve--perhaps a stylistic opportunity to separate code sections.
+
+This means that the ApprovedFundraiser state is never checked, and the
+fundraiser can withdraw at any point.
+
+The justifiable innocence of this bug is that the `only` modifier used to
+contain three conditions (if, else if, else) but it was refactored to remove one
+of them and an `if` was accidentally omitted and a semicolon accidentally found
+its way in.
+
+To summarize, the diff is the removal of "if" and an addition of a semicolon.
+
+For people who are not super careful and familiar with the language, this looks
+like legitimate and valid syntax. Why not include a condition for the else,
+right?
+
+- [x] Short and clean, less than 85 lines without comments and empty lines.
+- [x] Plausibly deniable, it's common to refactor if statements like this and
+      screw up the keyword state. Inconsistency in Solidity for when semicolons are
+      needed makes it also common to litter them inappropriately.
+- [x] Error arrising from misinterpreted code. It looks like an if/else if is
+      going on, but it's a no-op check that falls through.
+- [x] Plausible bug. We have encountered these two bugs (if/else if/else
+      mismatch after a refactor, and a rogue semicolon) multiple times in our own
+      code. It's very plausible that they'll occur simultaneously.
+
+
+## LICENSE
+
+This package is released under the CC BY-SA 3.0 license.
+
+https://creativecommons.org/licenses/by-sa/3.0/

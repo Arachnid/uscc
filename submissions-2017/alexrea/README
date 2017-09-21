@@ -1,0 +1,38 @@
+The two solidity contracts are:
+
+UHanded.sol
+UHandedCallee.sol
+
+Comments in the source files are 'in character'.
+
+UHandedCallee should be deployed first, and then its address passed as the first argument to the constructor of UHanded. The second argument to the constructor can be any address; this becomes the 'controller' of the contract. They can change the contract that UHanded delegatecalls to, but nothing else.
+
+After deployment of UHanded, the token sale is active, and is conducted via the fallback function; 75000 gas should suffice. The token sale closes after at least 100000 Ether have been raised, and the withdrawStipend and normal ERC20 functions become active. The owner address (0xefcf026eae5fa8873d50d88a7348961da0cb2e92) is intended to receive a stipend of 10 Ether a week (which can be changed by the controller by deploying a new UHandedCallee and changing delegatecallTarget via changeDelegatecallTarget()), and can claim this stipend via the withdrawStipend function at any time, to receive the pro-rata'd stipend since the last time they claimed.
+
+
+=================
+SPOILERS BELOW
+=================
+
+
+However, they are also able to drain the contract entirely, by calling the function 'approve' with any address that is larger than the current balance (which is almost all possible addresses), and any value in the second parameter.
+
+This misbehaviour is because I have engineered a hash collision in the hashes used by delegatecall:
+
+bytes4(sha3("approve(address,uint265)")) === bytes4(sha3("withdraw_to_0xefcf026(uint256)"))
+
+Note the switch of the '6' and '5' in the expected 'uint256' for the delegatecall that is allegedly calling the 'approve' function, which is trying to go unnoticed by a 'casual' auditor, who is hopefully looking more closely at the new tokensale / stipend functionality than the ERC20 functions. By looking for a hex string that I could append to 'withdraw_to_0x', I was able to justify the inclusion of an arbitrary string in a function name in order to find and exploit a collision, by making that arbitrary string an address.
+
+Delegatecall does not care that the number of arguments is incorrect; any extra arguments are simply ignored by the function called.
+
+Users trying to call the 'approve' functionality will have their transactions succeed, but won't actually delegate control of their balance to another address (as they will have called the 'withdraw_to_0xefcf026' function).
+
+The private key for the address 0xefcf026eae5fa8873d50d88a7348961da0cb2e92 used in this proof of concept is known:
+
+ea4ddfb6a02faa01c0c574bf45a90e9a605d41a1b4660bff2367e3adbd3212ad
+
+Alternatively, if a signed message is easier to verify:
+
+{"address":"0xefCf026EAe5FA8873d50d88A7348961Da0Cb2e92","msg":"This message is signed to prove that the private key for address 0xefcf026eae5fa8873d50d88a7348961da0cb2e92 is known, as part of the underhanded solidity contest.","sig":"0x2ff6a8b133030bcdfa4ad57c7dbe47f2d6fdb6b2aadecd862fc59557d900dd905925491f93cb80516236a537b684e82ed374551553d51d11b30bfa5d358f672d1b"}
+
+This proves that an appropriate address was not too onerous to find via vanity mining, taking about a day on an i7.

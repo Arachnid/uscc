@@ -1,0 +1,21 @@
+= Overview =
+
+MerdeICOFundsDisbursement contract is intended to be a fair disbursement system for Ether funds raised through MerdeICO contract (which is not included here, but it could be any type of the ICO contract). Once the ICO is finished, MerdeICO contract should send all raised ETH to MerdeICOFundsDisbursement contract where the funds will be safely stored and slowly released to the project founder over time (after developers have received their respective shares). 
+
+The contract consists of two main functions: distributeDeveloperShares() which should distribute 10% of raised ETH to project developers immediately after the ICO has ended and releaseDevelopmentFunds() which should slowly release remaining funds to the project founder, to be used as funding for further project development. The second function has not been implemented here for the sake of brevity (and also because it would be useless, as you will see shortly), while the first one is where the critical vulnerability lies. 
+
+= Intended behavior of distributeDeveloperShares() function =
+
+The Merde team consists of 5 members, including the founder. The remaining 4 members are developers which should receive total of 10% of raised ETH once the ICO has ended. The intended distribution is as follows: team lead receives 4% and three other developers receive 3%, 2% and 1% respectively. The founder *should* not receive any development bonus at this point. All members' addresses (along with their roles in the comments) are defined in the contract constructor. As a side note, the team members have agreed not to be too greedy and limit each individual bonus to 100 ETH. 
+
+The code in this function should be self-explanatory: there is a loop whose iterator marks the percentage to be paid out, going from 4 down to 0. Within the loop, current developer is paid the corresponding percentage, while ensuring that this amount doesn’t exceed the predefined upper limit. At the end of each iteration, current developer index is increased. Once the iterator reaches 0, developerDistributionDone flag is set in order to prevent multiple calls to this function.
+
+= Actual behavior of distributeDeveloperShares() function (SPOILERS AHEAD!) =
+
+Unfortunately for the ICO investors, not everything is as it seems. Once the 4 developers have received their respective shares, the remaining 90% of raised funds will be sent to the project founder immediately. This is because (as you might have noticed) the loop beginning at line 30 is actually an infinite loop, since unsigned integer will always be larger than 0. The contract developers have used a lot of sneakiness in order to make use this hard-to-spot bug to their advantage.
+
+One obvious problem that contract developers ran into was that the loop will keep iterating indefinitely, meaning that the transaction will run out of gas eventually, thus preventing developers from collecting their ill-gotten gains. To overcome this, the developers have inserted an innocent-looking "break" statement at line 42, pretending to serve the purpose of preventing further damage if something goes wrong, while actually ensuring that execution ends gracefully once the contract has been emptied.
+
+Another issue was that after the overflow occurs (i.e. the loop iterator becomes MAX INTEGER), the calculated payout would be way too large to go through. That's where the upper cap for the developer share comes in, under the pretense of team's non-greediness.
+
+Finally, there was an issue of continuously increasing developer index, which will eventually go out of bounds and ruin the entire plan. This is overcome by somewhat clumsy, but innocent-looking conditional at line 52, which increases developer index only if developer distribution has not been marked as done. But since distribution gets marked as done once the legitimate payouts have been sent out (line 49), the loop will keep iterating without increasing the developer index, sending the remaining funds (in chunks of 100 ether) the the project founder.
